@@ -13,6 +13,21 @@ const portfinder = require('portfinder')
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
+const getHtmlWebpackPlugins = () => {
+  let plugins = []
+  let pages = Object.keys(utils.getEntries('./src/entry/*.js', './src/entry/'))
+  pages.forEach(pathname => {
+    let conf = {
+      filename: config.dev.filename && config.dev.filename[pathname] || pathname + '.html',
+      template: config.dev.template && config.dev.template[pathname] || 'index.html',
+      inject: true
+    }
+    plugins.push(new HtmlWebpackPlugin(conf))
+  })
+
+  return plugins
+}
+
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
@@ -52,11 +67,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'index.html',
-      inject: true
-    }),
+    ...getHtmlWebpackPlugins(),
     // copy custom static assets
     new CopyWebpackPlugin([
       {

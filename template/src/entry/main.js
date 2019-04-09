@@ -3,9 +3,9 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 {{/if_eq}}
 import Vue from 'vue'
-import App from './App'
+import App from '@/App'
 {{#router}}
-import router from './router'
+import router from '@/router'
 {{/router}}
 
 Vue.config.productionTip = false
