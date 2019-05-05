@@ -20,8 +20,8 @@ const getHtmlWebpackPlugins = () => {
   let pages = Object.keys(utils.getEntries('./src/entry/*.js', './src/entry/'))
   pages.forEach(pathname => {
     let conf = {
-      filename: config.dev.filename && config.dev.filename[pathname] || pathname + '.html',
-      template: config.dev.template && config.dev.template[pathname] || 'index.html',
+      filename: config.build.filename && config.build.filename[pathname] || pathname + '.html',
+      template: config.build.template && config.build.template[pathname] || 'index.html',
       inject: true,
       minify: {
         removeComments: true,
