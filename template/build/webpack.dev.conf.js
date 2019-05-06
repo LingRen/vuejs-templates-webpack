@@ -20,7 +20,8 @@ const getHtmlWebpackPlugins = () => {
     let conf = {
       filename: config.dev.filename && config.dev.filename[pathname] || pathname + '.html',
       template: config.dev.template && config.dev.template[pathname] || 'index.html',
-      inject: true
+      inject: true,
+      chunks: [pathname]
     }
     plugins.push(new HtmlWebpackPlugin(conf))
   })
